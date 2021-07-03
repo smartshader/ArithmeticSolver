@@ -43,6 +43,12 @@ namespace ArithmeticSolver
                 {
                     combining.Enqueue(
                     current.CombineWith(existing, '+', current.Value + existing.Value));
+                    
+                    combining.Enqueue(
+                    current.CombineWith(existing, '-', current.Value - existing.Value));
+                    
+                    combining.Enqueue(
+                    current.CombineWith(current, '-', existing.Value + current.Value));
                 }
                 
                 known.Add(current);
