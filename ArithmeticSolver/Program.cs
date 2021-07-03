@@ -26,10 +26,29 @@ namespace ArithmeticSolver
 
         private static ArithmeticExpression Solve(ProblemStatement problem)
         {
-            return problem.InputNumbers
-                .Where(number => number == problem.DesiredResult)
-                .Select(number => new ArithmeticExpression(number))
-                .FirstOrDefault();
+            Queue<ArithmeticExpression> combining = new Queue<ArithmeticExpression>(
+                problem.InputNumbers.Select(number => new ArithmeticExpression(number)));
+
+            List<ArithmeticExpression> known = new List<ArithmeticExpression>();
+
+            while (combining.TryDequeue(out ArithmeticExpression current))
+            {
+                if (current.Value == problem.DesiredResult)
+                    return current;
+
+                IEnumerable<ArithmeticExpression> combinableWith = known
+                    .Where(expr => !expr.UsedNumbers.Intersect(current.UsedNumbers).Any());
+
+                foreach (ArithmeticExpression existing in combinableWith)
+                {
+                    combining.Enqueue(
+                    current.CombineWith(existing, '+', current.Value + existing.Value));
+                }
+                
+                known.Add(current);
+            }
+
+            return null;
         }
 
         private static ProblemStatement ReadProblem()
