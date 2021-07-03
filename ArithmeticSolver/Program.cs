@@ -9,7 +9,27 @@ namespace ArithmeticSolver
     {
         private static void Main()
         {
-            ProblemStatement problem = ReadProblem();
+            while (true)
+            {
+                ProblemStatement problem = ReadProblem();
+                
+                if (problem == null)
+                    break;
+                
+                ArithmeticExpression solution = Solve(problem);
+                
+                string report = solution?.ToString() ?? "No solution found.";
+                Console.WriteLine(report);
+                Console.WriteLine();
+            }
+        }
+
+        private static ArithmeticExpression Solve(ProblemStatement problem)
+        {
+            return problem.InputNumbers
+                .Where(number => number == problem.DesiredResult)
+                .Select(number => new ArithmeticExpression(number))
+                .FirstOrDefault();
         }
 
         private static ProblemStatement ReadProblem()

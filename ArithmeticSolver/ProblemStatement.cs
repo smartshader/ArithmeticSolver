@@ -4,13 +4,13 @@ namespace ArithmeticSolver
 {
     internal class ProblemStatement
     {
-        private readonly List<int> _input;
-        private readonly int _desiredResult;
+        public List<int> InputNumbers { get; }
+        public int DesiredResult { get; }
 
         public ProblemStatement(List<int> input, int desiredResult)
         {
-            _input = input;
-            _desiredResult = desiredResult;
+            InputNumbers = input;
+            DesiredResult = desiredResult;
         }
     }
 }
