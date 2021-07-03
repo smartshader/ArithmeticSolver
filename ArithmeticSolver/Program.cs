@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace ArithmeticSolver
@@ -48,7 +49,22 @@ namespace ArithmeticSolver
                     current.CombineWith(existing, '-', current.Value - existing.Value));
                     
                     combining.Enqueue(
-                    current.CombineWith(current, '-', existing.Value + current.Value));
+                    current.CombineWith(current, '-', existing.Value - current.Value));
+                    
+                    combining.Enqueue(
+                    current.CombineWith(existing, '*', current.Value * existing.Value));
+
+                    if (existing.Value != 0 && current.Value % existing.Value == 0)
+                    {
+                        combining.Enqueue(
+                        current.CombineWith(existing, '/', current.Value / existing.Value));
+                    }
+
+                    if (current.Value != 0 && existing.Value % current.Value == 0)
+                    {
+                        combining.Enqueue(
+                        current.CombineWith(current, '/', existing.Value / current.Value));
+                    }
                 }
                 
                 known.Add(current);
