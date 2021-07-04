@@ -25,7 +25,7 @@ namespace ArithmeticSolver
         private ArithmeticExpression(int value, char @operator, ArithmeticExpression leftChild, ArithmeticExpression rightChild)
         {
             Value = value;
-            UsedNumbers = leftChild.UsedNumbers.Union(rightChild.UsedNumbers);
+            UsedNumbers = leftChild.UsedNumbers.Concat(rightChild.UsedNumbers);
             Operator = @operator;
             LeftChild = leftChild;
             RightChild = rightChild;

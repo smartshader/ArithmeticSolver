@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace ArithmeticSolver
 {
@@ -25,6 +25,20 @@ namespace ArithmeticSolver
             }
         }
 
+        private static IEnumerable<int> ExceptWithDuplicates(IEnumerable<int> from, IEnumerable<int> remove) => from
+            .Select(value => (value: value, count: 1))
+            .Concat(remove.Select(value => (value: value, count: -1)))
+            .GroupBy(tuple => tuple.value)
+            .Select(group => (value: group.Key, count: group.Sum(tuple => tuple.count)))
+            .Where(tuple => tuple.count > 0)
+            .SelectMany(tuple => Enumerable.Repeat(tuple.value, tuple.count));
+
+        private static bool IsSuperset(IEnumerable<int> sequence, IEnumerable<int> of) => sequence
+            .Select(value => (value: value, count: 1))
+            .Concat(of.Select(value => (value: value, count: -1)))
+            .GroupBy(tuple => tuple.value)
+            .All(group => group.Sum(tuple => tuple.count) >= 0);
+
         private static ArithmeticExpression Solve(ProblemStatement problem)
         {
             Queue<ArithmeticExpression> combining = new Queue<ArithmeticExpression>(
@@ -37,8 +51,12 @@ namespace ArithmeticSolver
                 if (current.Value == problem.DesiredResult)
                     return current;
 
+                IEnumerable<int> availableNumbers =
+                    ExceptWithDuplicates(problem.InputNumbers, current.UsedNumbers);
+
                 IEnumerable<ArithmeticExpression> combinableWith = known
-                    .Where(expr => !expr.UsedNumbers.Intersect(current.UsedNumbers).Any());
+                    .Where(expr =>
+                        IsSuperset(availableNumbers, expr.UsedNumbers));
 
                 foreach (ArithmeticExpression existing in combinableWith)
                 {
