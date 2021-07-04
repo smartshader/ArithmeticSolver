@@ -44,7 +44,7 @@ namespace ArithmeticSolver
             Queue<ArithmeticExpression> combining = new Queue<ArithmeticExpression>(
                 problem.InputNumbers.Select(number => new ArithmeticExpression(number)));
 
-            HashSet<ArithmeticExpression> known = new HashSet<ArithmeticExpression>();
+            HashSet<ArithmeticExpression> known = new HashSet<ArithmeticExpression>(new ValueAndUsedNumbersComparer());
 
             while (combining.TryDequeue(out ArithmeticExpression current))
             {
