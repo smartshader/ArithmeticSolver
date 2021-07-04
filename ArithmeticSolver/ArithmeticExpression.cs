@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ArithmeticSolver
 {
-    internal class ArithmeticExpression
+    internal class ArithmeticExpression : IEquatable<ArithmeticExpression>
     {
         public int Value { get; }
 
@@ -44,5 +45,23 @@ namespace ArithmeticSolver
 
         private string Parenthesize(ArithmeticExpression child) =>
             child.Operator == '\0' ? $"{child.Value}" : $"({PlainToString(child)})";
+
+        private bool NullableEqual(ArithmeticExpression a, ArithmeticExpression b) =>
+            a is null && b is null || a is not null && a.Equals(b);
+        
+        public override bool Equals(object other) => Equals(other as ArithmeticException);
+
+        public bool Equals(ArithmeticExpression other) =>
+            other is not null &&
+            Value == other.Value &&
+            Operator == other.Operator &&
+            NullableEqual(LeftChild, other.LeftChild) &&
+            NullableEqual(RightChild, other.RightChild);
+
+        public override int GetHashCode() =>
+            Operator.GetHashCode() ^
+            Value << 1 ^
+            (LeftChild?.GetHashCode() ?? 0) << 2 ^
+            (RightChild?.GetHashCode() ?? 0) << 3;
     }
 }
