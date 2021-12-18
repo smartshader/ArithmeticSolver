@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using ArithmeticSolverV2.Common;
 
 namespace ArithmeticSolverV2.Domain
@@ -11,6 +12,11 @@ namespace ArithmeticSolverV2.Domain
             RawNumbersSequence.Select(inputs => new ProblemStatement(inputs));
 
         private IEnumerable<IEnumerable<int>> RawNumbersSequence =>
-            Console.In.IncomingLines().Select(line => line.ToNonNegativeInts());
+            Console.In.IncomingLines()
+                .Where(line => Regex.IsMatch(line, @"^[ \t\d]+$"))
+                .Where(line => Regex.Matches(line, @"\d+")
+                    .All(match => int.TryParse(match.Value, out _)))
+                .Select(line => line.ToNonNegativeInts())
+                .Where(numbers => numbers.Any());
     }
 }
