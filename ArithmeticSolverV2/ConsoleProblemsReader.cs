@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ArithmeticSolverV2
 {
@@ -8,8 +9,13 @@ namespace ArithmeticSolverV2
     {
         public IEnumerable<ProblemStatement> ReadAll() =>
             RawNumbersSequence.Select(inputs => new ProblemStatement(inputs));
-        
+
         private IEnumerable<IEnumerable<int>> RawNumbersSequence =>
-            Enumerable.Empty<IEnumerable<int>>();
+            Console.In.IncomingLines().Select(this.ToUnsignedInts);
+
+        private IEnumerable<int> ToUnsignedInts(string line) =>
+            Regex.Matches(line, @"\d+")
+                .Select(match => match.Value)
+                .Select(int.Parse);
     }
 }
