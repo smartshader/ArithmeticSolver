@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ArithmeticSolverV2
 {
-    internal class ConsoleProblemsReader
+    class ConsoleProblemsReader
     {
         public IEnumerable<ProblemStatement> ReadAll() =>
-            Enumerable.Empty<ProblemStatement>();
+            RawNumbersSequence.Select(inputs => new ProblemStatement(inputs));
+        
+        private IEnumerable<IEnumerable<int>> RawNumbersSequence =>
+            Enumerable.Empty<IEnumerable<int>>();
     }
 }
