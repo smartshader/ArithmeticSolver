@@ -11,7 +11,7 @@ namespace ArithmeticSolverV2
             RawNumbersSequence.Select(inputs => new ProblemStatement(inputs));
 
         private IEnumerable<IEnumerable<int>> RawNumbersSequence =>
-            Console.In.IncomingLines().Select(this.ToUnsignedInts);
+            Console.In.IncomingLines().Select(ToUnsignedInts);
 
         private IEnumerable<int> ToUnsignedInts(string line) =>
             Regex.Matches(line, @"\d+")

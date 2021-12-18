@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ArithmeticSolverV2
 {
@@ -7,7 +7,7 @@ namespace ArithmeticSolverV2
     {
         private static void Main()
         {
-            ProblemStatements.ToList().ForEach(_ => { });
+            ProblemStatements.WriteLinesTo(Console.Out);
         }
 
         private static IEnumerable<ProblemStatement> ProblemStatements =>

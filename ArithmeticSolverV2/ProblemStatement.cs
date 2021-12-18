@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ArithmeticSolverV2
 {
@@ -10,5 +11,11 @@ namespace ArithmeticSolverV2
         {
             InputNumbers = inputs;
         }
+
+        public override string ToString() =>
+            $"Problem statement: [{InputNumbersFormattedList}]";
+
+        private string InputNumbersFormattedList =>
+            string.Join(", ", InputNumbers.Select(number => $"{number}").ToArray());
     }
 }

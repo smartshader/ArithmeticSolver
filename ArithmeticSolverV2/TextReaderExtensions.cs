@@ -7,5 +7,13 @@ namespace ArithmeticSolverV2;
 public static class TextReaderExtensions
 {
     public static IEnumerable<string> IncomingLines(this TextReader reader) =>
-        Enumerable.Empty<string>();
+        reader.NullableIncomingLines().TakeWhile(line => !ReferenceEquals(line, null));
+
+    private static IEnumerable<string> NullableIncomingLines(this TextReader reader)
+    {
+        while (true)
+        {
+            yield return reader.ReadLine();
+        }
+    }
 }
