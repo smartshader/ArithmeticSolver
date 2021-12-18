@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using ArithmeticSolverV2.Common;
 
-namespace ArithmeticSolverV2
+namespace ArithmeticSolverV2.Domain
 {
     class ConsoleProblemsReader
     {
@@ -11,11 +11,6 @@ namespace ArithmeticSolverV2
             RawNumbersSequence.Select(inputs => new ProblemStatement(inputs));
 
         private IEnumerable<IEnumerable<int>> RawNumbersSequence =>
-            Console.In.IncomingLines().Select(ToUnsignedInts);
-
-        private IEnumerable<int> ToUnsignedInts(string line) =>
-            Regex.Matches(line, @"\d+")
-                .Select(match => match.Value)
-                .Select(int.Parse);
+            Console.In.IncomingLines().Select(line => line.ToNonNegativeInts());
     }
 }

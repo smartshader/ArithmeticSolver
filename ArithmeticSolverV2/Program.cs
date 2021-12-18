@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using ArithmeticSolverV2.Common;
+using ArithmeticSolverV2.Domain;
 
 namespace ArithmeticSolverV2
 {

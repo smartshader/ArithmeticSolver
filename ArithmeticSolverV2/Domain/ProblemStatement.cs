@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace ArithmeticSolverV2
+namespace ArithmeticSolverV2.Domain
 {
     internal class ProblemStatement
     {

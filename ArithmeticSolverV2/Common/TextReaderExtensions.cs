@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace ArithmeticSolverV2;
+namespace ArithmeticSolverV2.Common;
 
 public static class TextReaderExtensions
 {
